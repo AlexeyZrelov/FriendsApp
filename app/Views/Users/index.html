@@ -1,1 +1,30 @@
-Show all users
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Webpage</title>
+</head>
+<body>
+<h1>My Webpage</h1>
+{{ a_variable }}
+
+<table border="1" width="100%" cellpadding="5">
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Descriptions</th>
+    </tr>
+
+    {% for item in articles %}
+
+    <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.descriptions }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
