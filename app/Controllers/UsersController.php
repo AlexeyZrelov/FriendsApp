@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Article;
 use App\View;
 use App\Models\Dbh;
 use PDO;
@@ -16,11 +17,14 @@ class UsersController
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//        echo "<pre>";
-//        print_r($res);
+        $articles = [];
+        foreach ($res as $item) {
+            $articles[] = new Article($item['title'], $item['descriptions'], $item['id']);
+        }
 
         return new View('Users/index.html', [
-            'articles' => $res
+//            'articles' => $res
+            'articles' => $articles
         ]);
     }
 
@@ -32,13 +36,17 @@ class UsersController
         $stmt->execute([$vars['id']]);
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//        echo "<pre>";
-//        var_dump($res[0]);
+        $article = new Article($res[0]['title'], $res[0]['descriptions'], $res[0]['id']);
 
         return new View('Users/show.html', [
-            'id' => $res[0]['id'],
-            'title' => $res[0]['title'],
-            'descriptions' => $res[0]['descriptions']
+//            'id' => $res[0]['id'],
+//            'title' => $res[0]['title'],
+//            'descriptions' => $res[0]['descriptions']
+
+            'id' => $article->getId(),
+            'title' => $article->getTitle(),
+            'descriptions' => $article->getDescription()
+
         ]);
     }
 }

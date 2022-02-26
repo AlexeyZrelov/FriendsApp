@@ -6,11 +6,13 @@ class Article
 {
     private string $title;
     private string $description;
+    private ?int $id = null;
 
-    public function __construct(string $title, string $description)
+    public function __construct(string $title, string $description, ?int $id = null)
     {
         $this->title = $title;
         $this->description = $description;
+        $this->id = $id;
     }
 
     public function getTitle(): string
@@ -22,4 +24,10 @@ class Article
     {
         return $this->description;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
 }

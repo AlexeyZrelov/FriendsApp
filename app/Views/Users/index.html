@@ -1,30 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Webpage</title>
-</head>
-<body>
-<h1>My Webpage</h1>
-{{ a_variable }}
 
-<table border="1" width="100%" cellpadding="5">
-    <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>Descriptions</th>
-    </tr>
 
+<ul>
     {% for item in articles %}
-
-    <tr>
-        <td>{{ item.id }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.descriptions }}</td>
-    </tr>
-
+    <li>
+        <a href="articles/{{ loop.index }}">{{ item.title }}</a>
+    </li>
     {% endfor %}
-
-</table>
-
-</body>
-</html>
+</ul>

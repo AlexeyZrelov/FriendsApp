@@ -1,6 +1,9 @@
 <?php
 
 use App\Controllers\UsersController;
+use App\Controllers\ArticlesController;
+use App\View;
+use App\Redirect;
 use \Twig\Environment;
 use \Twig\Loader\FilesystemLoader;
 
@@ -10,6 +13,19 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
     $r->addRoute('GET', '/users', [UsersController::class, 'index']);
     $r->addRoute('GET', '/users/{id:\d+}', [UsersController::class, 'show']);
+
+    // Articles
+    $r->addRoute('GET', '/articles', [ArticlesController::class, 'index']);
+    $r->addRoute('GET', '/articles/{id:\d+}', [ArticlesController::class, 'show']);
+    $r->addRoute('POST', '/articles', [ArticlesController::class, 'store']);
+    $r->addRoute('GET', '/articles/create', [ArticlesController::class, 'create']);
+    $r->addRoute('POST', '/articles/{id:\d+}/delete', [ArticlesController::class, 'delete']);
+
+    $r->addRoute('GET', '/articles/{id:\d+}/edit', [ArticlesController::class, 'edit']);
+    $r->addRoute('POST', '/articles/{id:\d+}', [ArticlesController::class, 'update']);
+
+    // Registration
+
 
 });
 
@@ -43,7 +59,15 @@ switch ($routeInfo[0]) {
 
         $twig = new Environment(new FilesystemLoader('app/Views'));
 
-        echo $twig->render($response->getPath(), $response->getVariables());
+
+        if ($response instanceof View) {
+            echo $twig->render($response->getPath(), $response->getVariables());
+        }
+
+        if ($response instanceof Redirect) {
+            header('Location: ' . $response->getLocation());
+            exit;
+        }
 
         break;
 
