@@ -1,0 +1,32 @@
+<h3>*** {{ uid }}  {{ email }}</h3>
+(<a href="/registration">Exit</a>) (<a href="/registration/{{ id }}/create">Create</a>)
+
+<div>
+
+</div>
+
+<ul>
+  {% for article in articles %}
+  <li>
+<!--    <a href="/registration/{{ article.uid }}/create">{{ article.title }} uid:{{ article.uid }} id:{{ article.id }}</a>-->
+    <a href="/comments/{{ article.id }}/comments">{{ article.title }} uid:{{ article.uid }} id:{{ article.id }} (comments)</a>
+    <p>{{ article.descriptions }}</p>
+    <small>{{ date }}</small>
+    <div style="display: flex;">
+    <p  style="padding: 10px;">
+      <form method="post" action="/registration/{{ article.uid }}/delete">
+        <button type="submit" onclick="return confirm('Are you sure?');">X</button>
+      </form>
+    </p>
+    <p style="padding: 10px">
+      <form method="post" action="/registration/{{ article.id }}/like">
+        <button type="submit">+</button>
+      </form>
+    </p>
+      <small style="padding-left: 10px;">{{ articleLikes }}</small>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+
+

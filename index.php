@@ -1,7 +1,11 @@
 <?php
 
+session_start();
+
+use App\Controllers\CommentaryController;
 use App\Controllers\UsersController;
 use App\Controllers\ArticlesController;
+use App\Controllers\RegistrController;
 use App\View;
 use App\Redirect;
 use \Twig\Environment;
@@ -25,7 +29,27 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('POST', '/articles/{id:\d+}', [ArticlesController::class, 'update']);
 
     // Registration
+    $r->addRoute('GET', '/registration', [RegistrController::class, 'index']);
+    $r->addRoute('POST', '/registration/signup', [RegistrController::class, 'signup']);
 
+    $r->addRoute('GET', '/registration/continue', [RegistrController::class, 'continue']);
+
+    $r->addRoute('POST', '/registration/login', [RegistrController::class, 'login']);
+    $r->addRoute('GET', '/registration/login', [RegistrController::class, 'login']);
+
+    $r->addRoute('POST', '/registration/{id:\d+}/delete', [RegistrController::class, 'delete']);
+
+    $r->addRoute('GET', '/registration/{id:\d+}/create', [RegistrController::class, 'create']);
+
+    $r->addRoute('POST', '/registration/{id:\d+}/article', [RegistrController::class, 'article']);
+
+    // likes
+    $r->addRoute('POST', '/registration/{id:\d+}/like', [RegistrController::class, 'like']);
+
+    $r->addRoute('GET', '/comments/{id:\d+}/comments', [CommentaryController::class, 'comments']);
+    $r->addRoute('POST', '/comments/{id:\d+}/delete', [CommentaryController::class, 'delete']);
+    $r->addRoute('POST', '/comments/{id:\d+}/deletecomment', [CommentaryController::class, 'deletecomment']);
+    $r->addRoute('POST', '/comments/{id:\d+}/create', [CommentaryController::class, 'create']);
 
 });
 
@@ -73,3 +97,14 @@ switch ($routeInfo[0]) {
 
 }
 
+if (isset($_SESSION['errors'])) {
+    unset($_SESSION['errors']);
+}
+
+if (isset($_SESSION['inputs'])) {
+    unset($_SESSION['inputs']);
+}
+
+if (isset($_SESSION['article_id'])) {
+    unset($_SESSION['article_id']);
+}

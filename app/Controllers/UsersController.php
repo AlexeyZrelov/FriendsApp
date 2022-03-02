@@ -38,7 +38,7 @@ class UsersController
 
         $article = new Article($res[0]['title'], $res[0]['descriptions'], $res[0]['id']);
 
-        return new View('Users/show.html', [
+        return new View('Users/welcome.html', [
 //            'id' => $res[0]['id'],
 //            'title' => $res[0]['title'],
 //            'descriptions' => $res[0]['descriptions']

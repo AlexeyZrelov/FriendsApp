@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+    <style>
+        textarea {
+            resize: none;
+        }
+
+        .clear {
+            margin-top: 50px;
+        }
+
+        #author {
+            width: 30%;
+            height: 10%;
+        }
+
+        .is-h {
+            font-weight: bold;
+            font-family: cursive;
+            margin-top: 2%;
+        }
+
+        #message {
+            width: 30%;
+        }
+
+        .is-button {
+            cursor: pointer;
+            color: white;
+            background-color: green;
+            width: 100px;
+            height: 40px;
+            margin-top: 1%;
+            outline: none; /* Убираем линию вокруг кнопки при нажатии */
+            font-weight: bold;
+            font-family: cursive;
+            font-size: 1.2em;
+            border: none;
+            transition: all 0.3s ease-out;
+        }
+
+        .is-button:hover {
+            color: black;
+            background: rgb(48, 184, 66);
+        }
+    </style>
+</head>
+<body>
+<h4>Comments</h4>
+<h4>*** {{ uid }}  {{ email }} ***</h4>
+(<a href="/registration/continue">Back</a>) * (<a href="/registration">Exit</a>)
+<div>
+
+</div>
+<ul>
+    {% for article in articles %}
+    <li>
+        <h5>{{ article.title }} (uid:{{ article.uid }} id:{{ article.id }})</h5>
+        <p>{{ article.descriptions }}</p>
+        <small style="padding: 5px; border-bottom: green solid;">{{ article.date }}</small>
+
+        <div style="display: flex; padding-top: 20px;">
+            <p  style="padding: 10px;">
+            <form method="post" action="/comments/{{ article.id }}/delete">
+                <button type="submit" onclick="return confirm('Are you sure?');">X</button>
+            </form>
+            </p>
+<!--            <p style="padding: 10px">-->
+<!--            <form method="post" action="/registration/{{ article.id }}/like">-->
+<!--                <button type="submit">+</button>-->
+<!--            </form>-->
+<!--            </p>-->
+<!--            <small style="padding-left: 10px;">{{ articleLikes }}</small>-->
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+<div style="border-bottom: green solid;">
+<!--  // Comments create  -->
+    <form method="post" action="/comments/{{ id }}/create">
+        <div>
+            <p class="is-h">Author:<br> <input name="author" type="text" class="is-input" id="author"></p>
+
+        </div>
+        <div>
+            <p class="is-h">Message:<br><textarea name="message" rows="3" cols="50" id="message"></textarea></p>
+        </div>
+        <div>
+<!--            <button type="submit">Create</button>-->
+            <button type="submit" id='click' name="button" class="is-button">Create</button>
+        </div>
+    </form>
+    <!--  // End comments create  -->
+</div>
+<div style="padding: 20px;">
+<!--  // Comments  -->
+    <ul>
+        {% for comment in comments %}
+        <li>
+            <h5>{{ comment.author }} (article id:{{ comment.uid }})</h5>
+            <p>{{ comment.message }}</p>
+            <small style="padding: 5px; border-bottom: green solid;">{{ comment.date }}</small>
+            <div style="padding: 15px;">
+            <form method="post" action="/comments/{{ comment.id }}/deletecomment">
+                <input type="hidden" name="uid" value="{{ comment.id }}" />
+                <button type="submit" onclick="return confirm('Are you sure?');">X</button>
+            </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+<!--  // End Comments  -->
+</div>
+</body>
+</html>
+
+
+
+

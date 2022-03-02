@@ -1,0 +1,27 @@
+<h3>*** {{ uid }}  {{ email }}  {{ id }}</h3>
+
+(<a href="/registration/continue">Back</a>)
+<div>
+
+<!--    <ul>-->
+<!--        {% for error in errors.getAll %}-->
+<!--        <li>{{ error }}</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+
+</div>
+<form method="post" action="/registration/{{ id }}/article">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" />
+        <input type="hidden" name="uid" value="{{ id }}" />
+        <input type="hidden" name="date" value="{{ date }}" />
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+    </div>
+    <div>
+        <button type="submit">Create</button>
+    </div>
+</form>

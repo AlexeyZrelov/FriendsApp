@@ -23,7 +23,6 @@ class ArticlesController
         }
 
         return new View('Articles/index.html', [
-//            'articles' => $res
             'articles' => $articles
         ]);
     }
@@ -36,7 +35,7 @@ class ArticlesController
 
         $article = new Article($res[0]['title'], $res[0]['descriptions'], $res[0]['id']);
 
-        return new View('Articles/show.html', [
+        return new View('Articles/welcome.html', [
 
             'article' => $article
 
@@ -53,9 +52,6 @@ class ArticlesController
         // Validate form
         $stmt = (new Dbh())->connect()->prepare('INSERT INTO article (title, descriptions) VALUES (?, ?)');
         $stmt->execute([$_POST['title'], $_POST['description']]);
-
-        // redirect /articles
-//        header('Location: /articles');
 
         return new Redirect('/articles');
     }
