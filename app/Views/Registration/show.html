@@ -11,10 +11,10 @@
 <!--    <a href="/registration/{{ article.uid }}/create">{{ article.title }} uid:{{ article.uid }} id:{{ article.id }}</a>-->
     <a href="/comments/{{ article.id }}/comments">{{ article.title }} uid:{{ article.uid }} id:{{ article.id }} (comments)</a>
     <p>{{ article.descriptions }}</p>
-    <small>{{ date }}</small>
-    <div style="display: flex;">
+    <small style="color: gray; border-bottom: green solid;">{{ date }}</small>
+    <div style="display: flex; padding-top: 10px;">
     <p  style="padding: 10px;">
-      <form method="post" action="/registration/{{ article.uid }}/delete">
+      <form method="post" action="/registration/{{ article.id }}/delete">
         <button type="submit" onclick="return confirm('Are you sure?');">X</button>
       </form>
     </p>

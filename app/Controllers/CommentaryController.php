@@ -16,17 +16,20 @@ class CommentaryController
         $stmt->execute(array($vars['id']));
         $article = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // comments
-        $stmt1 = (new Dbh())->connect()->prepare('SELECT * FROM comments');
+        // comments ORDER BY date DESC
+        $stmt1 = (new Dbh())->connect()->prepare('SELECT * FROM comments ORDER BY date DESC');
         $stmt1->execute();
         $comment = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
+        $error = $_SESSION['errors'] ?? null;
 
         return new View('Comments/main.html', [
             'articles' => $article,
             'uid'      => $_SESSION['log_name'],
             'email'    => $_SESSION['email'],
             'id'       => $vars['id'],
-            'comments' => $comment
+            'comments' => $comment,
+            'errors'   => $error
         ]);
     }
 
@@ -41,14 +44,13 @@ class CommentaryController
     public function create(array $vars): Redirect
     {
 
-//        echo "<pre>";
-//        print_r($_POST);die;
-
         if (!empty($_POST['author']) && !empty($_POST['message'])) {
 
             $stmt = (new Dbh())->connect()->prepare('INSERT INTO comments (author, message, date, uid) VALUES (?, ?, NOW(), ?)');
             $stmt->execute([$_POST['author'], $_POST['message'], $vars['id']]);
 
+        } else {
+            $_SESSION['errors'] = 'Field is required.';
         }
 
         return new Redirect('/comments/' . $vars['id'] . '/comments');
@@ -56,9 +58,6 @@ class CommentaryController
 
     public function deletecomment(array $vars): Redirect
     {
-
-//        echo "<pre>";
-//        print_r($_POST);die;
 
         $stmt = (new Dbh())->connect()->prepare('DELETE FROM comments WHERE id=?');
         $stmt->execute([$vars['id']]);

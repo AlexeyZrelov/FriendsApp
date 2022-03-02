@@ -60,7 +60,7 @@
     <li>
         <h5>{{ article.title }} (uid:{{ article.uid }} id:{{ article.id }})</h5>
         <p>{{ article.descriptions }}</p>
-        <small style="padding: 5px; border-bottom: green solid;">{{ article.date }}</small>
+        <small style="padding: 5px; border-bottom: green solid; color: gray;">{{ article.date }}</small>
 
         <div style="display: flex; padding-top: 20px;">
             <p  style="padding: 10px;">
@@ -79,6 +79,7 @@
     {% endfor %}
 </ul>
 <div style="border-bottom: green solid;">
+    <p style="color: red;">{{ errors }}</p>
 <!--  // Comments create  -->
     <form method="post" action="/comments/{{ id }}/create">
         <div>
@@ -102,7 +103,7 @@
         <li>
             <h5>{{ comment.author }} (article id:{{ comment.uid }})</h5>
             <p>{{ comment.message }}</p>
-            <small style="padding: 5px; border-bottom: green solid;">{{ comment.date }}</small>
+            <small style="padding: 5px; border-bottom: green solid; color: gray;">{{ comment.date }}</small>
             <div style="padding: 15px;">
             <form method="post" action="/comments/{{ comment.id }}/deletecomment">
                 <input type="hidden" name="uid" value="{{ comment.id }}" />

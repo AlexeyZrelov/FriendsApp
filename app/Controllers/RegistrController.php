@@ -184,7 +184,7 @@ class RegistrController
 //        var_dump($_POST['uid']);die;
 //        var_dump($_POST);die;
 
-        $stmt = (new Dbh())->connect()->prepare('DELETE FROM article WHERE uid=?');
+        $stmt = (new Dbh())->connect()->prepare('DELETE FROM article WHERE id=?');
         $stmt->execute([$vars['id']]);
 
         return new Redirect('/registration/continue');
@@ -192,7 +192,7 @@ class RegistrController
 
     public function like(array $vars): Redirect
     {
-        session_start();
+//        session_start();
         $_SESSION['article_id'] = $vars['id'];
 
         $stmt = (new Dbh())->connect()->prepare('INSERT INTO article_likes (uid, article_id) VALUES (?, ?)');
