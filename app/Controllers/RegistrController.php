@@ -117,6 +117,9 @@ class RegistrController
             $stmt2->execute([$user[0]['id']]);
             $article = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
+            // friend invite
+
+
             $_SESSION['user_id'] = $user[0]['id'];
             $_SESSION['log_name'] = $user[0]['uid'];
             $_SESSION['email'] = $user[0]['email'];

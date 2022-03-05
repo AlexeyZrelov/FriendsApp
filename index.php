@@ -3,6 +3,7 @@
 session_start();
 
 use App\Controllers\CommentaryController;
+use App\Controllers\FriendInviteController;
 use App\Controllers\UsersController;
 use App\Controllers\ArticlesController;
 use App\Controllers\RegistrController;
@@ -50,6 +51,11 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('POST', '/comments/{id:\d+}/delete', [CommentaryController::class, 'delete']);
     $r->addRoute('POST', '/comments/{id:\d+}/deletecomment', [CommentaryController::class, 'deletecomment']);
     $r->addRoute('POST', '/comments/{id:\d+}/create', [CommentaryController::class, 'create']);
+
+    // invite
+    $r->addRoute('GET', '/invite', [FriendInviteController::class, 'index']);
+    $r->addRoute('GET', '/invite/{id:\d+}/create', [FriendInviteController::class, 'create']);
+    $r->addRoute('POST', '/invite/{id:\d+}/delete', [FriendInviteController::class, 'delete']);
 
 });
 

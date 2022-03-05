@@ -102,11 +102,13 @@
         {% for comment in comments %}
         <li>
             <h5>{{ comment.author }} (article id:{{ comment.uid }})</h5>
-            <p>{{ comment.message }}</p>
+            <p style="background-color: lightgreen; padding: 10px; width: 30%;">
+                {{ comment.message }}
+            </p>
             <small style="padding: 5px; border-bottom: green solid; color: gray;">{{ comment.date }}</small>
             <div style="padding: 15px;">
             <form method="post" action="/comments/{{ comment.id }}/deletecomment">
-                <input type="hidden" name="uid" value="{{ comment.id }}" />
+                <input type="hidden" name="uid" value="{{ comment.uid }}" />
                 <button type="submit" onclick="return confirm('Are you sure?');">X</button>
             </form>
             </div>

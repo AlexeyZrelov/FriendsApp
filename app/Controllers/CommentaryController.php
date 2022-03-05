@@ -17,8 +17,9 @@ class CommentaryController
         $article = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // comments ORDER BY date DESC
-        $stmt1 = (new Dbh())->connect()->prepare('SELECT * FROM comments ORDER BY date DESC');
-        $stmt1->execute();
+//        $stmt1 = (new Dbh())->connect()->prepare('SELECT * FROM comments ORDER BY date DESC');
+        $stmt1 = (new Dbh())->connect()->prepare('SELECT * FROM comments WHERE uid = ? ORDER BY date DESC');
+        $stmt1->execute([$vars['id']]);
         $comment = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
         $error = $_SESSION['errors'] ?? null;
